@@ -1,0 +1,31 @@
+        {% extends 'base.html' %}
+{% comment %}READ do CRUD. A view envia tarefas e opções de filtro. GET só consulta. Cada alteração usa POST com CSRF. As permissões são verificadas também na view.{% endcomment %}
+        {% block content %}
+        <div class="titulo"><h1>Minhas tarefas</h1><a class="botao" href="{% url 'tarefas:criar' %}">Nova tarefa</a></div>
+    {# Os filtros ficam na query string. Não precisam de CSRF porque não gravam dados. #}
+<form method="get" class="filtros">
+  <label>Situação <select name="situacao"><option value="">Todas</option>
+  {% for valor, rotulo in situacoes %}<option value="{{ valor }}" {% if valor == situacao_atual %}selected{% endif %}>{{ rotulo }}</option>{% endfor %}
+  </select></label>
+  <label>Categoria <select name="categoria"><option value="">Todas</option>
+  {% for categoria in categorias %}<option value="{{ categoria.pk }}" {% if categoria.pk|stringformat:"s" == categoria_atual %}selected{% endif %}>{{ categoria.nome }}</option>{% endfor %}
+  </select></label>
+  <button>Filtrar</button><a href="{% url 'tarefas:lista' %}">Limpar</a>
+</form>
+<div class="tabela"><table>
+<thead><tr><th>Título</th><th>Categoria</th><th>Prioridade</th><th>Data prevista</th><th>Situação</th><th>Ações</th></tr></thead>
+{# get_*_display apresenta os rótulos das escolhas. empty trata a lista sem resultados. #}
+<tbody>{% for tarefa in tarefas %}<tr>
+  <td>{{ tarefa.titulo }}</td><td>{{ tarefa.categoria }}</td>
+  <td>{{ tarefa.get_prioridade_display }}</td><td>{{ tarefa.data_prevista|date:"d/m/Y" }}</td>
+  <td>{{ tarefa.get_situacao_display }}</td><td class="acoes">
+    <a href="{% url 'tarefas:editar' tarefa.pk %}">Editar</a>
+    {% if tarefa.situacao == 'PENDENTE' %}
+    {# O token protege o envio do formulário. require_POST impede concluir por GET. #}
+    <form method="post" action="{% url 'tarefas:concluir' tarefa.pk %}">{% csrf_token %}<button>Concluir</button></form>
+    {% endif %}
+    <a href="{% url 'tarefas:excluir' tarefa.pk %}">Excluir</a>
+  </td></tr>
+{% empty %}<tr><td colspan="6">Nenhuma tarefa encontrada.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% endblock %}

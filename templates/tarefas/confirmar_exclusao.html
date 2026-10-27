@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% comment %}GET mostra esta confirmação. Só Confirmar exclusão envia POST. Cancelar é um link de navegação sem efeito no banco.{% endcomment %}
+{% block content %}
+<h1>Excluir tarefa</h1>
+<p>Deseja excluir “{{ tarefa.titulo }}”?</p>
+<form method="post">{% csrf_token %}<button>Confirmar exclusão</button>
+<a href="{% url 'tarefas:lista' %}">Cancelar</a></form>
+{% endblock %}

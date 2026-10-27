@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% comment %}Encontro 9: LoginView usa o formulário nativo. next permite retornar à página solicitada após entrar, com validação do Django.{% endcomment %}
+{% block content %}
+<h1>Entrar</h1><p>Use a conta criada pelo administrador.</p>
+<form method="post" class="formulario">
+  {% csrf_token %}{{ form.as_p }}
+  {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+  <button>Entrar</button>
+</form>
+{% endblock %}

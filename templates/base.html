@@ -1,0 +1,22 @@
+{% comment %}Encontro 8: estrutura comum. As páginas filhas preenchem block content. Encontro 9: usuário e mensagens vêm dos context processors.{% endcomment %}
+        {# static resolve o endereço do CSS dentro do app. #}
+{% load static %}
+        <!doctype html>
+        <html lang="pt-BR">
+        <head>
+          <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>{% block title %}Gestão de tarefas{% endblock %}</title>
+          <link rel="stylesheet" href="{% static 'tarefas/estilo.css' %}">
+        </head>
+        <body><header><strong>Gestão de tarefas</strong><nav>
+          <a href="{% url 'tarefas:lista' %}">Tarefas</a>
+          {% if user.is_authenticated %}
+      <span>Olá, {{ user.username }}</span>
+      {% if user.is_staff %}<a href="{% url 'admin:index' %}">Admin</a>{% endif %}
+      <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button>Sair</button></form>
+      {% endif %}
+</nav></header><main>
+{# Mensagens sobrevivem ao redirecionamento após a operação. #}
+{% for message in messages %}<p class="mensagem" role="status">{{ message }}</p>{% endfor %}
+{% block content %}{% endblock %}
+</main></body></html>

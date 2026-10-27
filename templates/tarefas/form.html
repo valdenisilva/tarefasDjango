@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% comment %}CREATE e UPDATE reutilizam este template. form.as_p apresenta campos, valores e erros de validação. O objeto form vem da view.{% endcomment %}
+{% block content %}
+<h1>{{ titulo }}</h1>
+<form method="post" class="formulario">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button>Salvar</button> <a href="{% url 'tarefas:lista' %}">Cancelar</a>
+</form>
+{% endblock %}

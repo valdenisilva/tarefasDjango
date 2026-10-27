@@ -1,0 +1,17 @@
+/* CSS local compartilhado pelos templates que herdam de base.html. */
+* { box-sizing: border-box; }
+body { margin: 0; color: #213042; background: #f3f5f8; font: 16px/1.5 system-ui, sans-serif; }
+header { padding: 18px max(20px, calc((100% - 1100px)/2)); background: #173652; color: white; }
+nav, .acoes, .titulo, .filtros { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+nav { margin-top: 10px; } nav a { color: white; }
+main { max-width: 1140px; margin: 24px auto; padding: 24px; background: white; border-radius: 8px; }
+a { color: #165981; } h1 { font-size: 1.7rem; }
+.titulo { justify-content: space-between; } .tabela { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; margin-top: 24px; }
+th, td { text-align: left; padding: 12px; border-bottom: 1px solid #d9e1e8; }
+th { background: #edf2f7; } form { margin: 0; }
+button, .botao { padding: 8px 14px; border: 0; border-radius: 4px; background: #175f88; color: white; font: inherit; cursor: pointer; text-decoration: none; }
+input, select, textarea { display: block; width: 100%; padding: 9px; border: 1px solid #a0acb9; border-radius: 4px; font: inherit; }
+.formulario { max-width: 580px; } .filtros { padding: 15px 0; align-items: end; }
+.mensagem { padding: 12px; background: #e6f5ed; border-left: 4px solid #23834c; }
+.errorlist { color: #a92020; } :focus-visible { outline: 3px solid #c98800; outline-offset: 3px; }
